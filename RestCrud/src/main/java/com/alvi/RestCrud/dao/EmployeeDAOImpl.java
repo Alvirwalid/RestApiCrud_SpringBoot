@@ -18,7 +18,12 @@ public class EmployeeDAOImpl implements  EmployeeDAO{
     }
 
 
+    @Override
+    public Employee save(Employee employee) {
 
+        Employee employee1 = entityManager.merge(employee);
+        return employee1;
+    }
     @Override
     public Employee findById(int id) {
 
@@ -47,10 +52,5 @@ public class EmployeeDAOImpl implements  EmployeeDAO{
         return query.getResultList();
     }
 
-    @Override
-    public Employee save(Employee employee) {
 
-        Employee employee1 = entityManager.merge(employee);
-        return employee1;
-    }
 }
