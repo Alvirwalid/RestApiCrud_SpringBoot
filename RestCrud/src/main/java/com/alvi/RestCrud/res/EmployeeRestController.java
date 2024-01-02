@@ -7,6 +7,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -35,7 +36,14 @@ public class EmployeeRestController {
 
     @GetMapping("/employees")
     List<Employee> findAll(){
-        return  employeeServiceImp.findAll();
+
+        List<Employee>employeeList1=employeeServiceImp.findAll();
+
+        Comparator<Employee> sort=Comparator.comparing(Employee::getId);
+
+        List<Employee>sortedList= employeeList1.stream().sorted(sort.reversed()).toList();
+
+        return  sortedList;
     }
 
     @GetMapping("/employees/{employeeid}")
@@ -47,7 +55,7 @@ public class EmployeeRestController {
         return  employee;
     }
 
-@PostMapping("/employees")
+    @PostMapping("/employees")
     public  Employee addEmployee(@RequestBody Employee employee){
 
 //        employee.setId(0);
